@@ -28,7 +28,7 @@ public class ProductController {
         return productService.updateProduct(id, requestDto);
     }
 
-    @GetMapping("products")
+    @GetMapping("/products")
     public List<ProductResponseDto> getProducts(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return productService.getProduct(userDetails.getUser());
     }
