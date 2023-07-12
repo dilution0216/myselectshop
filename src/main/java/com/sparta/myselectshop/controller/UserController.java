@@ -81,8 +81,9 @@ public class UserController {
     public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
             String token = kakaoService.kakaoLogin(code);
 
-            Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, token);
-            cookie.setPath("/");
+            Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, token.substring(7));
+//            Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, token); //정석인 구조는 아님. 서버,클라이언트를 다 만들고 있기 때문에 서버에 집중하기 위해 쿠키를 직접 set 해서 저장소에 저장되게 만든 것.
+            cookie.setPath("/");                                                                    //토큰 앞에 bearer (공백까지) 제거 하고 토큰 넣는것
             response.addCookie(cookie);
 
             return "redirect:/";
