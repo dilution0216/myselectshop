@@ -13,13 +13,35 @@ public class GlobalExceptionHandler {
     // 클래스 하나로 컨트롤 할 수 있기 때문에 유지보수,관리에 용이함. -> 개발 생산성 향상
 
     @ExceptionHandler({IllegalArgumentException.class})
-    public ResponseEntity<RestApiException> handleException(IllegalArgumentException ex) {
+    public ResponseEntity<RestApiException> illegalArgumentExceptionHandler(IllegalArgumentException ex) {
         RestApiException restApiException = new RestApiException(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
         return new ResponseEntity<>(
                 // HTTP body
                 restApiException,
                 // HTTP status code
                 HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler({NullPointerException.class})
+    public ResponseEntity<RestApiException> nullPointerExceptionHandler(NullPointerException ex) {
+        RestApiException restApiException = new RestApiException(ex.getMessage(), HttpStatus.NOT_FOUND.value());
+        return new ResponseEntity<>(
+                // HTTP body
+                restApiException,
+                // HTTP status code
+                HttpStatus.NOT_FOUND
+        );
+    }
+
+    @ExceptionHandler({ProductNotFoundException.class})
+    public ResponseEntity<RestApiException> notFoundProductExceptionHandler(ProductNotFoundException ex) {
+        RestApiException restApiException = new RestApiException(ex.getMessage(), HttpStatus.NOT_FOUND.value());
+        return new ResponseEntity<>(
+                // HTTP body
+                restApiException,
+                // HTTP status code
+                HttpStatus.NOT_FOUND
         );
     }
 }
